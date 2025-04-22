@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pasos Simplex</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .step {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .tableau {
+            font-family: monospace;
+            white-space: pre;
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pasos del Método Simplex</h1>
+        
+        <div class="steps-container">
+            {% for step in steps %}
+                {% if '|' in step %}
+                    <div class="tableau">{{ step }}</div>
+                {% else %}
+                    <div class="step">{{ step }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <a href="javascript:window.close()" class="button">Cerrar</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados</h1>
+        
+        <div class="result-section">
+            <h2>Solución Directa</h2>
+            {% if solution.status == 'Óptimo encontrado' %}
+                <p><strong>Valor óptimo:</strong> {{ solution.optimal_value|round(2) }}</p>
+                <p><strong>Variables:</strong></p>
+                <ul>
+                    {% for i in range(num_vars) %}
+                        <li>X{{ i+1 }} = {{ solution.variables[i]|round(2) }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">{{ solution.status }}: {{ solution.message }}</p>
+            {% endif %}
+        </div>
+        
+        {% if graph %}
+        <div class="result-section">
+            <h2>Método Gráfico</h2>
+            <div class="graph-container">
+                <img src="{{ graph }}" alt="Gráfico de solución" class="graph-img">
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="result-section">
+            <h2>Método Simplex</h2>
+            <a href="{{ url_for('show_simplex_steps') }}" target="_blank" class="button">
+                Ver pasos detallados del método simplex
+            </a>
+        </div>
+        
+        <a href="/" class="button">Volver al inicio</a>
+    </div>
+</body>
+</html> 

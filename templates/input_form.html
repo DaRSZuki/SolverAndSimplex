@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingresar Datos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Ingresar Datos del Problema</h1>
+        <form action="/solve" method="post">
+            <input type="hidden" name="num_vars" value="{{ num_vars }}">
+            <input type="hidden" name="num_constraints" value="{{ num_constraints }}">
+            
+            <h2>Función Objetivo</h2>
+            <div class="form-group">
+                <label>Operación:</label>
+                <select name="operation" required>
+                    <option value="maximize">Maximizar</option>
+                    <option value="minimize">Minimizar</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Coeficientes:</label>
+                {% for i in range(num_vars) %}
+                    <input type="number" step="0.01" name="obj_var_{{ i+1 }}" placeholder="X{{ i+1 }}" required>
+                {% endfor %}
+            </div>
+            
+            <h2>Restricciones</h2>
+            {% for i in range(num_constraints) %}
+            <div class="form-group constraint">
+                <h3>Restricción {{ i+1 }}</h3>
+                <div class="form-group">
+                    <label>Coeficientes:</label>
+                    {% for j in range(num_vars) %}
+                        <input type="number" step="0.01" name="con_{{ i+1 }}_var_{{ j+1 }}" placeholder="X{{ j+1 }}" required>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <label>Operador:</label>
+                    <select name="con_{{ i+1 }}_operator" required>
+                        <option value="<=">≤</option>
+                        <option value=">=">≥</option>
+                        <option value="==">=</option>
+                    </select>
+                    <input type="number" step="0.01" name="con_{{ i+1 }}_rhs" placeholder="Valor" required>
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit">Resolver</button>
+        </form>
+    </div>
+</body>
+</html>
